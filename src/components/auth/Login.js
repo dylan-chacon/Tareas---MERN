@@ -38,7 +38,7 @@ const Login = () => {
                         />
                     </div>
                     <div className="campo-form">
-                        <label htmlFor="password">contraseña</label>
+                        <label htmlFor="password">Contraseña</label>
                         <input
                             type="password"
                             id="password"
