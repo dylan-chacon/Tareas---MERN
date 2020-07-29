@@ -4,7 +4,7 @@ import projectContext from '../../context/proyectos/projectContext';
 const NewProject = () => {
     //context
     const projectsContext = useContext(projectContext);
-    const { form, showForm } = projectsContext;
+    const { form, showForm, addProject, errorForm, showError } = projectsContext;
     //state
     const [project, setProject] = useState({
         name: ''
@@ -20,6 +20,17 @@ const NewProject = () => {
     //Submit
     const onSubmitProject = e => {
         e.preventDefault();
+        //validar
+        if (name.trim() === '') {
+            showError();
+            return
+        }
+        //agregar al state
+        addProject(project);
+        //reiniciar form
+        setProject({
+            name: ''
+        })
     }
     return (
         <Fragment>
@@ -28,7 +39,7 @@ const NewProject = () => {
                 className="btn btn-block btn-primario"
                 onClick={() => showForm()}
             >Nuevo Proyecto</button>
-            { form &&
+            { form ?
                 (
                     <form
                         className="formulario-nuevo-proyecto"
@@ -47,8 +58,10 @@ const NewProject = () => {
                             className="btn btn-block btn-primario"
                         >Agregar Proyecto</button>
                     </form>
-                ) 
+                ) : null
             }
+            { errorForm && 
+                <p className="mensaje error">El nombre del proyecto es obligatorio</p> }
         </Fragment>
     );
 }

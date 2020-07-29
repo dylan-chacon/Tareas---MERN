@@ -9,7 +9,7 @@ const List = () => {
     //useEffect
     useEffect(() => {
         getProjects();
-    });
+    }, []);
     //Revisar contenido
     if (projects.length === 0) return null;
 
