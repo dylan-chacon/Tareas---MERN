@@ -2,7 +2,8 @@ import {
     FORM_PROJECT,
     GET_PROJECTS,
     ADD_PROJECT,
-    CHECK_FORM
+    CHECK_FORM,
+    PROJECT_SELECTED
 } from '../../types';
 
 export default (state, action) => {
@@ -28,6 +29,13 @@ export default (state, action) => {
             return {
                 ...state,
                 errorForm: true
+            }
+        case PROJECT_SELECTED:
+            return {
+                ...state,
+                project: state.projects.filter(project =>
+                    project.id === action.payload
+                )
             }
         default:
             return state;

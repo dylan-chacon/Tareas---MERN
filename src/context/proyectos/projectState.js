@@ -6,7 +6,8 @@ import {
     FORM_PROJECT,
     GET_PROJECTS,
     ADD_PROJECT,
-    CHECK_FORM
+    CHECK_FORM,
+    PROJECT_SELECTED
 } from '../../types';
 
 const ProjectState = props => {
@@ -19,6 +20,7 @@ const ProjectState = props => {
         form: false,
         projects: [],
         errorForm: false,
+        project: null
     }
 //dispatch actions
     const [state, dispatch] = useReducer(projectReducer, initialState);
@@ -50,16 +52,25 @@ const ProjectState = props => {
             type: CHECK_FORM
         })
     }
+    //seleccionar proyecto
+    const projectSelected = projectId => {
+        dispatch({
+            type: PROJECT_SELECTED,
+            payload: projectId
+        });
+    }
     return (
         <projectContext.Provider
             value={{
                 form: state.form,
                 projects: state.projects,
                 errorForm: state.errorForm,
+                project: state.project,
                 showForm,
                 getProjects,
                 addProject,
                 showError,
+                projectSelected,
             }}
         >
             {props.children}
