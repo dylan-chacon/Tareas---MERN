@@ -3,3 +3,4 @@ export const GET_PROJECTS = 'GET_PROJECTS';
 export const ADD_PROJECT = 'ADD_PROJECT';
 export const CHECK_FORM = 'CHECK_FORM';
 export const PROJECT_SELECTED = 'PROJECT_SELECTED';
+export const DELETE_PROJECT = 'DELETE_PROJECT';
