@@ -5,13 +5,14 @@ import {
     PROJECT_TASKS,
     ADD_TASK,
     CHECK_TASK,
+    DELETE_TASK,
 } from '../../types';
 
 const TaskState = props => {
     const initialState = {
         tasks: [
-            { name: 'leer', state: true, projectId: 1 },
-            { name: 'soplar', state: false, projectId: 2 },
+            { id: 1, name: 'leer', state: true, projectId: 1 },
+            { id: 2, name: 'soplar', state: false, projectId: 2 },
         ],
         taskProject: null,
         taskError: false
@@ -39,6 +40,13 @@ const TaskState = props => {
             type: CHECK_TASK
         })
     }
+    //eliminar tarea
+    const deleteTask = id => {
+        dispatch({
+            type: DELETE_TASK,
+            payload: id
+        })
+    }
     return (
         <TaskContext.Provider
             value={{
@@ -46,6 +54,7 @@ const TaskState = props => {
                 taskProject: state.taskProject,
                 taskError: state.taskError,
                 getTasks,
+                deleteTask,
                 checkTask,
                 addTask
             }}

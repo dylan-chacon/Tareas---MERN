@@ -24,7 +24,10 @@ const TaskList = () => {
                         <p>No hay tareas</p>
                     </li>)
                     : taskProject.map(tarea => (
-                        <Task task={tarea} />
+                        <Task
+                            task={tarea}
+                            key={tarea.id}
+                        />
                     ))
                 }
             </ul>
