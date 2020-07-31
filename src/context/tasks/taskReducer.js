@@ -1,5 +1,7 @@
 import {
-    PROJECT_TASKS
+    PROJECT_TASKS,
+    ADD_TASK,
+    CHECK_TASK,
 } from '../../types';
 
 export default (state, action) => {
@@ -10,6 +12,17 @@ export default (state, action) => {
                 taskProject: state.tasks.filter(task =>
                     task.projectId === action.payload
                 )
+            }
+        case ADD_TASK:
+            return {
+                ...state,
+                taskError: false,
+                tasks: [...state.tasks,  action.payload]
+            }
+        case CHECK_TASK:
+            return {
+                ...state,
+                taskError: true
             }
         default:
             return state;
