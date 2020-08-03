@@ -10,6 +10,7 @@ const List = () => {
     //useEffect
     useEffect(() => {
         getProjects();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     //Revisar contenido
     if (projects.length === 0) return <p>No hay proyectos, comienza creando uno</p>;

@@ -1,11 +1,16 @@
 import React, { useReducer } from 'react';
 import TaskContext from './taskContext';
 import TaskReducer from './taskReducer';
+import { v4 as uuidv4 } from 'uuid';
 import {
     PROJECT_TASKS,
     ADD_TASK,
     CHECK_TASK,
     DELETE_TASK,
+    TASK_STATE,
+    TASK_SELECTED,
+    EDIT_TASK,
+    CLEAN_TASK,
 } from '../../types';
 
 const TaskState = props => {
@@ -15,7 +20,8 @@ const TaskState = props => {
             { id: 2, name: 'soplar', state: false, projectId: 2 },
         ],
         taskProject: null,
-        taskError: false
+        taskError: false,
+        taskSelected: null,
     }
     //reducer
     const [state, dispatch] = useReducer(TaskReducer, initialState);
@@ -29,6 +35,7 @@ const TaskState = props => {
     }
     //agregar tarea
     const addTask = task => {
+        task.id = uuidv4();
         dispatch({
             type: ADD_TASK,
             payload: task
@@ -47,16 +54,48 @@ const TaskState = props => {
             payload: id
         })
     }
+    //Cambiar estado de tarea
+    const changeTaskState = task => {
+        dispatch({
+            type: TASK_STATE,
+            payload: task
+        })
+    }
+    //Seleccionar tarea
+    const selectTask = task => {
+        dispatch({
+            type: TASK_SELECTED,
+            payload: task
+        })
+    }
+    //Editar tarea
+    const editTask = task => {
+        dispatch({
+            type: EDIT_TASK,
+            payload: task
+        })
+    }
+    //limpiar tarea
+    const clearTask = () => {
+        dispatch({
+            type: CLEAN_TASK
+        })
+    }
     return (
         <TaskContext.Provider
             value={{
                 tasks: state.tasks,
                 taskProject: state.taskProject,
                 taskError: state.taskError,
+                taskSelected: state.taskSelected,
                 getTasks,
                 deleteTask,
+                editTask,
+                clearTask,
                 checkTask,
-                addTask
+                addTask,
+                changeTaskState,
+                selectTask,
             }}
         >
             {props.children}

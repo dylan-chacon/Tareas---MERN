@@ -7,13 +7,22 @@ const Task = ({task}) => {
     const projectsContext = useContext(projectContext);
     const { project } = projectsContext;
     const tasksContext = useContext(TaskContext);
-    const { deleteTask, getTasks } = tasksContext;
+    const { deleteTask, getTasks, changeTaskState, selectTask } = tasksContext;
     //extraer
     const [actualProject] = project;
     //eliminar tarea
     const deleteT = ID => {
         deleteTask(ID);
         getTasks(actualProject.id);
+    }
+    //cambiar estado de tarea
+    const changeState = task => {
+        if (task.state) {
+            task.state = false;
+        } else {
+            task.state = true;
+        }
+        changeTaskState(task);
     }
     return (
         <li className="tarea sombra">
@@ -25,12 +34,14 @@ const Task = ({task}) => {
                         <button
                             type="button"
                             className="completo"
+                            onClick={() => changeState(task)}
                         >Completo</button>
                     ) : 
                     (
                         <button
                             type="button"
                             className="incompleto"
+                            onClick={() => changeState(task)}
                         >Incompleto</button>
                     )
                 }
@@ -40,6 +51,7 @@ const Task = ({task}) => {
                 <button
                     type="button"
                     className="btn btn-ptimario"
+                    onClick={() => selectTask(task)}
                 >Editar</button>
                 <button
                     type="button"

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import projectContext from '../../context/proyectos/projectContext';
 import TaskContext from '../../context/tasks/taskContext';
 
@@ -7,12 +7,22 @@ const TaskForm = () => {
     const projectsContext = useContext(projectContext);
     const { project } = projectsContext;
     const tasksContext = useContext(TaskContext);
-    const { addTask, checkTask, taskError, getTasks } = tasksContext;
+    const { taskSelected, addTask, clearTask, editTask, checkTask, taskError, getTasks } = tasksContext;
     //state
     const [task, setTask] = useState({
         name: ''
     })
     const { name } = task;
+    //effect
+    useEffect(() => {
+        if (taskSelected !== null) {
+            setTask(taskSelected);
+        } else {
+            setTask({
+                name: ''
+            })
+        }
+    }, [taskSelected])
     //sin proyecto seleccionado
     if (!project) return null
     //leer inputs
@@ -32,10 +42,17 @@ const TaskForm = () => {
             checkTask();
             return
         }
-        //agregar tarea
-        task.projectId = actualProject.id;
-        task.state = false;
-        addTask(task);
+        //edición de tarea
+        if (taskSelected === null) {
+            //agregar tarea
+            task.projectId = actualProject.id;
+            task.state = false;
+            addTask(task);
+        } else {
+            //editar tarea
+            editTask(task);
+            clearTask();
+        }
         //actualizar state tareas proyecto actual
         getTasks(actualProject.id);
         //reiniciar formulario
@@ -62,7 +79,7 @@ const TaskForm = () => {
                     <button
                         type="submit"
                         className="btn btn-primario btn-submit btn-block"
-                    >Agregar Tarea</button>
+                    >{taskSelected ? 'Editar Tarea' : 'Agregar Tarea'}</button>
                 </div>
             </form>
             {taskError &&
