@@ -6,7 +6,7 @@ import {
     HIDE_ALERT
 } from '../../types';
 
-const alertState = props => {
+const AlertState = props => {
     const initialState = {
         alert: null
     }
@@ -41,4 +41,4 @@ const alertState = props => {
     );
 }
  
-export default alertState;
+export default AlertState;
