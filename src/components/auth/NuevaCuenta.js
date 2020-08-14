@@ -1,11 +1,14 @@
 import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import alertContext from '../../context/alert/alertContext';
+import authContext from '../../context/auth/authContext';
 
 const NuevaCuenta = () => {
     //context
     const alertContext1 = useContext(alertContext);
     const { alert, showAlert } = alertContext1;
+    const authContext1 = useContext(authContext);
+    const { registerUser } = authContext1;
     //state
     const [user, setUser] = useState({
         email: '',
@@ -39,6 +42,12 @@ const NuevaCuenta = () => {
             showAlert('Las contraseñas no son iguales', 'alerta-error');
             return
         }
+        //action
+        registerUser({
+            name,
+            email,
+            password
+        });
     }
     return (
         <div className="form-usuario">
