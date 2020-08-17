@@ -1,14 +1,23 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import alertContext from '../../context/alert/alertContext';
 import authContext from '../../context/auth/authContext';
 
-const NuevaCuenta = () => {
+const NuevaCuenta = (props) => {
     //context
     const alertContext1 = useContext(alertContext);
     const { alert, showAlert } = alertContext1;
     const authContext1 = useContext(authContext);
-    const { registerUser } = authContext1;
+    const { message, auth, registerUser } = authContext1;
+    //errores de registro
+    useEffect(() => {
+        if (auth) {
+            props.history.push('/proyectos')
+        }
+        if (message) {
+            showAlert(message.msg, message.category)
+        }
+    }, [message, auth, props.history])
     //state
     const [user, setUser] = useState({
         email: '',

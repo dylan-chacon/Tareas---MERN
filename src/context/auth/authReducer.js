@@ -17,6 +17,7 @@ export default (state, action) => {
                 message: null
             }
         case ERROR_REGISTER:
+            localStorage.removeItem('token');
             return {
                 ...state,
                 token: null,

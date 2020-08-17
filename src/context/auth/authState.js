@@ -27,16 +27,33 @@ const AuthState = props => {
                 type: SUCCESS_REGISTER,
                 payload: res.data
             })
+            //obtner user
+            userAuth();
         } catch (error) {
-            /* console.log(error) */
+            console.log(error.response)
             const alert = {
                 msg: error.response.data.msg,
                 category: 'alerta-error'
             }
-            
             dispatch({
                 type: ERROR_REGISTER,
                 payload: alert
+            })
+        }
+    }
+    //usuario autenticado
+    const userAuth = async () => {
+        const token = localStorage.getItem('token');
+        if (token) {
+
+        }
+
+        try {
+            const res = await userAxios.get('api/auth');
+            console.log(res)
+        } catch (error) {
+            dispatch({
+                type: ERROR_LOGIN
             })
         }
     }
