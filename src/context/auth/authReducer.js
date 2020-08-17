@@ -23,6 +23,11 @@ export default (state, action) => {
                 token: null,
                 message: action.payload
             }
+        case GET_USER:
+            return {
+                ...state,
+                user: action.payload
+            }
         default:
             return state
     }
