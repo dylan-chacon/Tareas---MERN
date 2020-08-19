@@ -7,6 +7,13 @@ import ProjectState from './context/proyectos/projectState';
 import TaskState from './context/tasks/taskState';
 import AlertState from './context/alert/alertState';
 import AuthState from './context/auth/authState';
+import tokenAuth from './config/token';
+
+//revisar token
+const token = localStorage.getItem('token');
+if (token) {
+  tokenAuth(token);
+}
 
 function App() {
   return (

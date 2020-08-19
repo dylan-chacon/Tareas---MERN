@@ -17,17 +17,21 @@ export default (state, action) => {
                 auth: true,
                 message: null
             }
+        case LOGOUT:
         case ERROR_LOGIN:
         case ERROR_REGISTER:
             localStorage.removeItem('token');
             return {
                 ...state,
                 token: null,
-                message: action.payload
+                message: action.payload,
+                auth: null,
+                user: null,
             }
         case GET_USER:
             return {
                 ...state,
+                auth: true,
                 user: action.payload
             }
         default:
