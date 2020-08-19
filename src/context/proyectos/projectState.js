@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react';
 import projectContext from './projectContext';
 import projectReducer from './projectReducer';
-import { v4 as uuidv4 } from 'uuid';
+import userAxios from '../../config/axios';
 import {
     FORM_PROJECT,
     GET_PROJECTS,
@@ -12,11 +12,6 @@ import {
 } from '../../types';
 
 const ProjectState = props => {
-    const eProjects = [
-        {name: 'Lets Goal', id: 1},
-        {name: 'AllMarket', id: 2},
-        {name: 'Dr. Faustus', id: 3},
-    ]
     const initialState = {
         form: false,
         projects: [],
@@ -33,19 +28,28 @@ const ProjectState = props => {
         });
     }
     //get projects
-    const getProjects = () => {
-        dispatch({
-            type: GET_PROJECTS,
-            payload: eProjects
-        });
+    const getProjects = async () => {
+        try {
+            const res = await userAxios.get('/api/projects')
+            dispatch({
+                type: GET_PROJECTS,
+                payload: res.data.projects
+            });
+        } catch (error) {
+            console.log(error)
+        }
     }
     //ADD project
-    const addProject = project => {
-        project.id = uuidv4();
-        dispatch({
-            type: ADD_PROJECT,
-            payload: project
-        })
+    const addProject = async project => {
+        try {
+            const res = await userAxios.post('/api/projects', project)
+            dispatch({
+                type: ADD_PROJECT,
+                payload: res.data.project
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }
     //mostrar error
     const showError = () => {
