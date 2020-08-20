@@ -4,6 +4,7 @@ export const ADD_PROJECT = 'ADD_PROJECT';
 export const CHECK_FORM = 'CHECK_FORM';
 export const PROJECT_SELECTED = 'PROJECT_SELECTED';
 export const DELETE_PROJECT = 'DELETE_PROJECT';
+export const ERROR_PROJECT ='ERROR_PROJECT';
 // tasks
 export const PROJECT_TASKS = 'PROJECT_TASKS';
 export const ADD_TASK = 'ADD_TASK';

@@ -6,6 +6,7 @@ import {
     FORM_PROJECT,
     GET_PROJECTS,
     ADD_PROJECT,
+    ERROR_PROJECT,
     CHECK_FORM,
     PROJECT_SELECTED,
     DELETE_PROJECT
@@ -16,6 +17,7 @@ const ProjectState = props => {
         form: false,
         projects: [],
         errorForm: false,
+        message: null,
         project: null
     }
 //dispatch actions
@@ -36,7 +38,14 @@ const ProjectState = props => {
                 payload: res.data.projects
             });
         } catch (error) {
-            console.log(error)
+            const alert = {
+                msg: 'Hubo un error',
+                category: 'alerta-error'
+            }
+            dispatch({
+             type: ERROR_PROJECT,
+             payload: alert
+            })
         }
     }
     //ADD project
@@ -48,7 +57,14 @@ const ProjectState = props => {
                 payload: res.data.project
             })
         } catch (error) {
-            console.log(error)
+            const alert = {
+                msg: 'Hubo un error',
+                category: 'alerta-error'
+            }
+            dispatch({
+             type: ERROR_PROJECT,
+             payload: alert
+            })
         }
     }
     //mostrar error
@@ -65,11 +81,23 @@ const ProjectState = props => {
         });
     }
     //eliminar proyecto
-    const deleteProject = projectId => {
-        dispatch({
-            type: DELETE_PROJECT,
-            payload: projectId
-        });
+    const deleteProject = async projectId => {
+       try {
+           await userAxios.delete(`/api/projects/${projectId}`)
+           dispatch({
+                type: DELETE_PROJECT,
+                payload: projectId
+            });
+       } catch (error) {
+           const alert = {
+               msg: 'Hubo un error',
+               category: 'alerta-error'
+           }
+           dispatch({
+            type: ERROR_PROJECT,
+            payload: alert
+           })
+       } 
     }
     return (
         <projectContext.Provider
@@ -78,6 +106,7 @@ const ProjectState = props => {
                 projects: state.projects,
                 errorForm: state.errorForm,
                 project: state.project,
+                message: state.message,
                 showForm,
                 getProjects,
                 addProject,

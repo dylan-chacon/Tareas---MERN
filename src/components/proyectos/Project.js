@@ -9,7 +9,7 @@ const Project = ({project}) => {
     const tasksContext = useContext(TaskContext);
     const { getTasks } = tasksContext;
     //extraer
-    const { name, id } = project;
+    const { name, _id } = project;
     //agregar proyecto actual
     const selectProject = ID => {
         projectSelected(ID); //proyecto actual
@@ -20,7 +20,7 @@ const Project = ({project}) => {
             <button
                 type="button"
                 className="btn btn-blank"
-                onClick={() => selectProject(id)}
+                onClick={() => selectProject(_id)}
             >{name}</button>
         </li>
     );
