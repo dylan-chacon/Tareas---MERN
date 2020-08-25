@@ -7,7 +7,6 @@ import {
     ADD_TASK,
     CHECK_TASK,
     DELETE_TASK,
-    TASK_STATE,
     TASK_SELECTED,
     EDIT_TASK,
     CLEAN_TASK,

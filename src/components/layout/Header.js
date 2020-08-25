@@ -8,6 +8,7 @@ const Header = () => {
     //useeffect   
     useEffect(() => {
         userAuth();
+    // eslint-disable-next-line
     }, []);
     return (
         <header className="app-header">
