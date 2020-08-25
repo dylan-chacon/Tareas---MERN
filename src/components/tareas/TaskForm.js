@@ -45,8 +45,7 @@ const TaskForm = () => {
         //edición de tarea
         if (taskSelected === null) {
             //agregar tarea
-            task.projectId = actualProject.id;
-            task.state = false;
+            task.project = actualProject._id;
             addTask(task);
         } else {
             //editar tarea
@@ -54,7 +53,7 @@ const TaskForm = () => {
             clearTask();
         }
         //actualizar state tareas proyecto actual
-        getTasks(actualProject.id);
+        getTasks(actualProject._id);
         //reiniciar formulario
         setTask({
             name: ''

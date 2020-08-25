@@ -7,22 +7,18 @@ const Task = ({task}) => {
     const projectsContext = useContext(projectContext);
     const { project } = projectsContext;
     const tasksContext = useContext(TaskContext);
-    const { deleteTask, getTasks, changeTaskState, selectTask } = tasksContext;
+    const { deleteTask, getTasks, editTask, selectTask } = tasksContext;
     //extraer
     const [actualProject] = project;
     //eliminar tarea
     const deleteT = ID => {
-        deleteTask(ID);
-        getTasks(actualProject.id);
+        deleteTask(ID, actualProject._id);
+        getTasks(actualProject._id);
     }
     //cambiar estado de tarea
-    const changeState = task => {
-        if (task.state) {
-            task.state = false;
-        } else {
-            task.state = true;
-        }
-        changeTaskState(task);
+    const changeState = async (task, status) => {
+        task.state = status;
+        await editTask(task);
     }
     return (
         <li className="tarea sombra">
@@ -34,14 +30,14 @@ const Task = ({task}) => {
                         <button
                             type="button"
                             className="completo"
-                            onClick={() => changeState(task)}
+                            onClick={() => changeState(task, false)}
                         >Completo</button>
                     ) : 
                     (
                         <button
                             type="button"
                             className="incompleto"
-                            onClick={() => changeState(task)}
+                            onClick={() => changeState(task, true)}
                         >Incompleto</button>
                     )
                 }
@@ -56,7 +52,7 @@ const Task = ({task}) => {
                 <button
                     type="button"
                     className="btn btn-secundario"
-                    onClick={() => deleteT(task.id)}
+                    onClick={() => deleteT(task._id)}
                 >Eliminar</button>
             </div>
         </li>
